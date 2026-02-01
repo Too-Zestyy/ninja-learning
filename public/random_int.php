@@ -7,7 +7,8 @@
 <body>
 <p>Rolling D6:
   <?php
-  include 'd6.php';
+  const PRIVATE_INCLUDED = TRUE;
+  include '../private/d6.php';
   $d = new d6();
   $roll = $d->roll();
 
