@@ -12,10 +12,11 @@
   </component>
   <component name="PhpIncludePathManager">
     <include_path>
+      <path value="/etc/php" />
       <path value="D:/PHP/php-8.5.2-Win32-vs17-x64" />
     </include_path>
   </component>
-  <component name="PhpProjectSharedConfiguration" php_language_level="8.5" />
+  <component name="PhpProjectSharedConfiguration" php_language_level="8.3" />
   <component name="PhpStanOptionsConfiguration">
     <option name="transferred" value="true" />
   </component>
