@@ -6,8 +6,7 @@
   </head>
   <body>
     <p>
-      <?php
-      echo $output; ?>
+      <?php echo $output; ?>
     </p>
   </body>
 </html>

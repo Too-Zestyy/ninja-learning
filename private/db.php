@@ -19,10 +19,10 @@ function get_mysql_db_connection() : PDO
   $user = $env['DB_USERNAME'];
   $pw = $env['DB_PASSWORD'];
 
+  $connstring = "mysql:host=$host;dbname=$schema;charset=utf8mb4";
+
   return new PDO(
-    'mysql:host=' . $host . ';' .
-    'dbname=' . $schema . ';' .
-    'charset=utf8mb4',
+    $connstring,
     $user,
     $pw);
 }
