@@ -2,7 +2,7 @@
 declare(strict_types=1);
 include '../private/db.php';
 try {
-  $pdo = get_db_connection();
+  $pdo = get_mysql_db_connection();
 
   $id = $_GET['id'];
 
