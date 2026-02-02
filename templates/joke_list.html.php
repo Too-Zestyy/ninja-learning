@@ -5,9 +5,11 @@
   <title>Script Output</title>
 </head>
 <body>
-<h1>Alternate template</h1>
+<h1>Joke book: All Pages</h1>
 <ul>
-  <?php echo $output; ?>
+  <?php foreach ($jokes as $joke): {
+    echo '<li><a href="?id=' . $joke['id'] . '">' . $joke['setup'] . '<a/></li>';
+  } endforeach;?>
 </ul>
 </body>
 </html>

@@ -9,14 +9,16 @@ try {
 
   // Querying a specific joke
   if ($_GET['id']) {
-    $joke_details_query = $pdo->prepare("SELECT * FROM jokes WHERE id = :id");
+    $joke_details_query = $pdo->prepare("SELECT setup, punchline FROM jokes WHERE id = :id");
     $joke_details_query->bindParam(':id', $id);
     $joke_details_query->execute();
 
     $joke_details = $joke_details_query->fetch(PDO::FETCH_ASSOC);
 
-    $output = '<p>Selected note ' . $_GET['id'] . '</p>' . '<p>' . $joke_details['punchline'] . '</p>';
-    include  '../templates/db_access.html.php';
+    $setup = $joke_details['setup'];
+    $punchline = $joke_details['punchline'];
+
+    include '../templates/view_joke.html.php';
   }
   // Requesting the list of jokes
   else {
