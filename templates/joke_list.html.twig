@@ -7,9 +7,10 @@
 <body>
   <h1>Joke book - now with twig-based paper!</h1>
   <ol>
+{#      <li>Set item</li>#}
     {% for joke in jokes %}
       <li>
-        <a href="?id={{ joke.id }}">
+        <a href="{{ url_for('viewJoke', {'id': joke.id}) }}">
           {{ joke.setup }}
         </a>
       </li>

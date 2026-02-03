@@ -1,6 +1,6 @@
 <?php
 /**
- * Opens a connection to a MySQL database using the credentials supplied by the environment variables within `.env`.
+ * Lazily opens a connection to a MySQL database when required using the credentials supplied by the environment variables within `.env`.
  * `.env` is required to be at the root directory of the project.
  *
  * The `.env` file requires:
@@ -11,18 +11,22 @@
  **/
 function get_mysql_db_connection() : PDO
 {
-  $env = parse_ini_file(dirname(__FILE__) . '../../.env');
+    static $pdo = null;
+    if (null === $pdo) {
+        $env = parse_ini_file(dirname(__FILE__) . '../../.env');
 
-  $host = $env['DB_HOST'];
-  $schema = $env['DB_SCHEMA'];
+        $host = $env['DB_HOST'];
+        $schema = $env['DB_SCHEMA'];
 
-  $user = $env['DB_USERNAME'];
-  $pw = $env['DB_PASSWORD'];
+        $user = $env['DB_USERNAME'];
+        $pw = $env['DB_PASSWORD'];
 
-  $connstring = "mysql:host=$host;dbname=$schema;charset=utf8mb4";
+        $connstring = "mysql:host=$host;dbname=$schema;charset=utf8mb4";
 
-  return new PDO(
-    $connstring,
-    $user,
-    $pw);
+        $pdo = new PDO(
+            $connstring,
+            $user,
+            $pw);
+    }
+    return $pdo;
 }
