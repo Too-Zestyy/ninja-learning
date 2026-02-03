@@ -6,3 +6,8 @@ dist
 .cache
 
 .env
+twig_cache
+composer.lock
+composer.phar
+
+vendor
