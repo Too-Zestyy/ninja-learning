@@ -8,7 +8,7 @@
 <h1>Joke book: All Pages</h1>
 <ul>
   <?php foreach ($jokes as $joke): {
-    echo '<li><a href="?id=' . $joke['id'] . '">' . $joke['setup'] . '<a/></li>';
+    echo '<li><a href="?id=' . $joke['id'] . '">' . $joke['setup'] . '</a></li>';
   } endforeach;?>
 </ul>
 </body>

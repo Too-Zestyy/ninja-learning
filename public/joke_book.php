@@ -1,6 +1,12 @@
 <?php
 declare(strict_types=1);
+
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
+
 include '../private/db.php';
+require_once '../vendor/autoload.php';
+//Twig_Autoloader::register();
 try {
   $pdo = get_mysql_db_connection();
 
@@ -42,7 +48,12 @@ try {
     if ($_GET['id']) {
       $output .= '<p>Selected note ' . $_GET['id'] . '</p>';
     }
-    include '../templates/joke_list.html.php';
+    $loader = new FilesystemLoader('../templates');
+    $twig = new Environment($loader, [
+      'cache' => '../twig_cache',
+    ]);
+    echo $twig->render('twig_test.twig', ['jokes' => $jokes]);
+//    include '../templates/twig_test.html.twig';
   }
 }
 catch (PDOException $e) {

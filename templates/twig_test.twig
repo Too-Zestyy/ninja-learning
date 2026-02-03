@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Twig Test</title>
+</head>
+<body>
+  <h1>Joke book - now with twig-based paper!</h1>
+  <ol>
+    {% for joke in jokes %}
+      <li>
+        <a href="?id={{ joke.id }}">
+          {{ joke.setup }}
+        </a>
+      </li>
+    {% endfor %}
+  </ol>
+</body>
+</html>
