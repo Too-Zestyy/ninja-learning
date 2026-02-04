@@ -7,6 +7,7 @@ use Slim\Views\Twig;
 
 require '../vendor/autoload.php';
 require '../private/db.php';
+require '../private/setup.php';
 
 $app = AppFactory::create();
 
@@ -93,5 +94,7 @@ $app->post('/add_joke', function (Request $request, Response $response, $args) u
         'punchline' => 'form posted'
     ]);
 });
+
+set_up_db_schema($pdo);
 
 $app->run();
