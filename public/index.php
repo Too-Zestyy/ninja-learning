@@ -8,6 +8,7 @@ use Slim\Views\Twig;
 require '../vendor/autoload.php';
 require '../private/db.php';
 require '../private/setup.php';
+use Slim\Routing\RouteCollectorProxy;
 
 $app = AppFactory::create();
 
@@ -19,6 +20,12 @@ $twig = Twig::create('../templates', ['cache' => '../twig_cache']);
 $app->add(TwigMiddleware::create($app, $twig));
 
 $pdo = get_mysql_db_connection();
+
+//$routeFiles = (array) glob(__DIR__ . '..' . DIRECTORY_SEPARATOR . 'routes' . DIRECTORY_SEPARATOR . '*.php');
+//foreach($routeFiles as $routeFile) {
+//    require_once $routeFile;
+//    echo $routeFile;
+//}
 
 $app->get('/', function (Request $request, Response $response, $args) use ($pdo) {
     $view = Twig::fromRequest($request);
@@ -94,6 +101,20 @@ $app->post('/add_joke', function (Request $request, Response $response, $args) u
         'punchline' => 'form posted'
     ]);
 });
+
+$app->group('/api', function (RouteCollectorProxy $group) use ($app, $pdo) {
+    $group->get('/jokes', function (Request $request, Response $response, $args) use ($pdo) {
+        $query = '
+        SELECT id, setup FROM jokes;
+        ';
+        $stmt = $pdo->query($query);
+
+        $jokes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return $response->withJson($jokes)->withHeader('Access-Control-Allow-Origin', '*');
+    });
+});
+
 
 set_up_db_schema($pdo);
 
