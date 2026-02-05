@@ -45,7 +45,7 @@ $app->get('/', function (Request $request, Response $response, $args) use ($pdo)
     ]);
 });
 
-$app->get('/jokes/{id}', function (Request $request, Response $response, $args) use ($pdo) {
+$app->get('/jokes/{id:[0-9]+}', function (Request $request, Response $response, $args) use ($pdo) {
     $view = Twig::fromRequest($request);
 
     $joke_id = $args['id'];
@@ -117,16 +117,25 @@ $app->post('/add_joke', function (Request $request, Response $response, $args) u
 
 $app->group('/api', function (RouteCollectorProxy $group) use ($app, $pdo) {
 
-    $group->get('/jokes', function (Request $request, Response $response, $args) use ($pdo) {
+    $group->get('/jokes/{page:[0-9]+}', function (Request $request, Response $response, $args) use ($pdo) {
+        $requested_page = $args['page'];
+
+        $pages = get_joke_page_count($pdo);
+
+        if ($pages < $requested_page || $requested_page == 0) {
+            return $response->withStatus(400)->withJson(['error' => 'page out of range']);
+        }
+
         return $response->withJson(
             [
-                'jokes' => get_joke_page($pdo, 1),
-                'pages' => get_joke_page_count($pdo)
+                'jokes' => get_joke_page($pdo, $requested_page),
+                'pages' => $pages
             ]
         );
     });
 })->add(new \middleware\ApiCorsHeaderMiddleware());
 
+$errorMiddleware = $app->addErrorMiddleware(false, true, true);
 
 set_up_db_schema($pdo);
 
