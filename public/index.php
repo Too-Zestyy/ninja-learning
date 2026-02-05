@@ -8,6 +8,7 @@ use Slim\Views\Twig;
 require '../vendor/autoload.php';
 require '../private/db.php';
 require '../private/setup.php';
+require '../middleware/ApiCorsHeaderMiddleware.php';
 use Slim\Routing\RouteCollectorProxy;
 
 $app = AppFactory::create();
@@ -102,7 +103,18 @@ $app->post('/add_joke', function (Request $request, Response $response, $args) u
     ]);
 });
 
+//$apiMiddleware = function (Request $request, \Psr\Http\Server\RequestHandlerInterface $handler) {
+//    // Proceed with the next middleware
+//    $response = $handler->handle($request);
+//
+//    // Modify the response after the application has processed the request
+//    $response = $response->withHeader('Access-Control-Allow-Origin', '*');
+//
+//    return $response;
+//};
+
 $app->group('/api', function (RouteCollectorProxy $group) use ($app, $pdo) {
+
     $group->get('/jokes', function (Request $request, Response $response, $args) use ($pdo) {
         $query = '
         SELECT id, setup FROM jokes;
@@ -111,9 +123,9 @@ $app->group('/api', function (RouteCollectorProxy $group) use ($app, $pdo) {
 
         $jokes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        return $response->withJson($jokes)->withHeader('Access-Control-Allow-Origin', '*');
+        return $response->withJson($jokes);
     });
-});
+})->add(new \middleware\ApiCorsHeaderMiddleware());
 
 
 set_up_db_schema($pdo);
