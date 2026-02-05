@@ -9,6 +9,8 @@ require '../vendor/autoload.php';
 require '../private/db.php';
 require '../private/setup.php';
 require '../middleware/ApiCorsHeaderMiddleware.php';
+
+require '../services/get_jokes.php';
 use Slim\Routing\RouteCollectorProxy;
 
 $app = AppFactory::create();
@@ -116,14 +118,12 @@ $app->post('/add_joke', function (Request $request, Response $response, $args) u
 $app->group('/api', function (RouteCollectorProxy $group) use ($app, $pdo) {
 
     $group->get('/jokes', function (Request $request, Response $response, $args) use ($pdo) {
-        $query = '
-        SELECT id, setup FROM jokes;
-        ';
-        $stmt = $pdo->query($query);
-
-        $jokes = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        return $response->withJson($jokes);
+        return $response->withJson(
+            [
+                'jokes' => get_joke_page($pdo, 1),
+                'pages' => get_joke_page_count($pdo)
+            ]
+        );
     });
 })->add(new \middleware\ApiCorsHeaderMiddleware());
 
