@@ -117,8 +117,14 @@ $app->post('/add_joke', function (Request $request, Response $response, $args) u
 
 $app->group('/api', function (RouteCollectorProxy $group) use ($app, $pdo) {
 
-    $group->get('/jokes/{page:[0-9]+}', function (Request $request, Response $response, $args) use ($pdo) {
-        $requested_page = $args['page'];
+    $group->get('/jokes[/{page:[0-9]+}]', function (Request $request, Response $response, $args) use ($pdo) {
+
+        if (array_key_exists('page', $args)) {
+            $requested_page = $args['page'];
+        }
+        else {
+            $requested_page = 1;
+        }
 
         $pages = get_joke_page_count($pdo);
 
