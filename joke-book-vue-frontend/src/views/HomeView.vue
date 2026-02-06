@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { get_all_jokes } from '@/api/jokes'
-import TheWelcome from '../components/TheWelcome.vue'
-import { onMounted, reactive, ref } from 'vue'
+import Loader from '@/components/utils/Loader.vue'
 
 // const api_resp = await get_all_jokes()
 </script>
@@ -9,48 +8,34 @@ import { onMounted, reactive, ref } from 'vue'
 <template>
   <main>
     <div>
-      <h1>This shows a test collection from the PHP API!</h1>
+      <h1>Joke book - Even better than ever to Vue!</h1>
 
-      <!-- <div v-if="state.data"> -->
-      <p>{{ data }}</p>
-      <!-- </div> -->
+      <ul class="joke-list" v-if="data.jokes">
+        <li v-for="joke in data.jokes">{{ joke.setup }}</li>
+      </ul>
+      <div v-else class="loading-content">
+        <Loader></Loader>
+        <h2>Loading jokes...</h2>
+      </div>
     </div>
-    <TheWelcome />
   </main>
 </template>
 
 <script lang="ts">
-type JokeResponse = { setup: string; punchline: string }[]
+type JokeResponse = { jokes: { setup: string; punchline: string }[]; pages: number }
 export default {
   data() {
     return {
-      data: [] as JokeResponse,
+      data: {} as JokeResponse,
       loading: false,
       error: null,
     }
   },
-  // methods: {
-  // async fetchData() {
-  //   this.data = await get_all_jokes()
-  // },
-  // TODO: onMounted is not being triggered here
-  // setup() {
-  //   const data = ref<{ setup: string; punchline: string }[] | undefined>(undefined)
-
-  //   onMounted(async () => {
-  //     data.value = [{ setup: 'hi', punchline: 'hello' }]
-  //     console.log(`the component is now mounted.`)
-  //   })
-
-  //   return {
-  //     data,
-  //   }
-  // },
 
   mounted() {
     get_all_jokes().then(
       (resp) => (this.data = resp),
-      (err) => (this.data = [{ setup: 'failed', punchline: err }]),
+      (err) => (this.data = {} as JokeResponse),
     )
     console.log(`the component is now mounted.`)
   },
@@ -58,3 +43,16 @@ export default {
   // },
 }
 </script>
+
+<style lang="css" scoped>
+.loading-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  gap: 10px;
+}
+.joke-list {
+  font-size: large;
+}
+</style>
