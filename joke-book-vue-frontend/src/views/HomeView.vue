@@ -9,12 +9,13 @@ import Loader from '@/components/utils/Loader.vue'
   <main>
     <div>
       <h1>Joke book - Even better than ever to Vue!</h1>
+      <!-- <Loader></Loader> -->
 
       <ul class="joke-list" v-if="data.jokes">
         <li v-for="joke in data.jokes">{{ joke.setup }}</li>
       </ul>
       <div v-else class="loading-content">
-        <Loader></Loader>
+        <Loader size="50px"></Loader>
         <h2>Loading jokes...</h2>
       </div>
     </div>
