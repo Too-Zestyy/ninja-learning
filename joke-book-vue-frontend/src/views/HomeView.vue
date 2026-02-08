@@ -8,7 +8,7 @@ import Loader from '@/components/utils/Loader.vue'
 <template>
   <main>
     <div>
-      <h1>Joke book - Even better than ever to Vue!</h1>
+      <h1 class="title">Joke book - Even better than ever to Vue!</h1>
       <!-- <Loader></Loader> -->
 
       <ul class="joke-list" v-if="data.jokes">
@@ -46,6 +46,10 @@ export default {
 </script>
 
 <style lang="css" scoped>
+.title {
+  width: 100%;
+}
+
 .loading-content {
   display: flex;
   flex-direction: row;
