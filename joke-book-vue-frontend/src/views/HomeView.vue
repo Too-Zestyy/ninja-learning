@@ -11,12 +11,14 @@ import Loader from '@/components/utils/Loader.vue'
       <h1 class="title">Joke book - Even better than ever to Vue!</h1>
       <!-- <Loader></Loader> -->
 
-      <ul class="joke-list" v-if="data.jokes">
-        <li v-for="joke in data.jokes">{{ joke.setup }}</li>
-      </ul>
-      <div v-else class="loading-content">
-        <Loader size="50px"></Loader>
-        <h2>Loading jokes...</h2>
+      <div class="content">
+        <ul class="joke-list" v-if="data.jokes">
+          <li v-for="joke in data.jokes">{{ joke.setup }}</li>
+        </ul>
+        <div v-else class="loading-content">
+          <Loader size="50px"></Loader>
+          <h2>Loading jokes...</h2>
+        </div>
       </div>
     </div>
   </main>
@@ -48,6 +50,15 @@ export default {
 <style lang="css" scoped>
 .title {
   width: 100%;
+  text-align: center;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1vw;
 }
 
 .loading-content {
