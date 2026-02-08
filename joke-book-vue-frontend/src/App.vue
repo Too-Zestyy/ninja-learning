@@ -15,7 +15,9 @@ import { RouterLink, RouterView } from 'vue-router'
       </div>
     </header>
 
-    <RouterView class="router" />
+    <main class="router">
+      <RouterView />
+    </main>
   </div>
 </template>
 <style scoped>
@@ -36,6 +38,10 @@ header {
   flex: auto;
   flex-grow: 1;
   min-height: 90vh;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  gap: 1rem;
 }
 
 .logo {

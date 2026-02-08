@@ -6,22 +6,18 @@ import Loader from '@/components/utils/Loader.vue'
 </script>
 
 <template>
-  <main>
-    <div>
-      <h1 class="title">Joke book - Even better than ever to Vue!</h1>
-      <!-- <Loader></Loader> -->
+  <h1 class="title">Joke book - Even better than ever to Vue!</h1>
+  <!-- <Loader></Loader> -->
 
-      <div class="content">
-        <ul class="joke-list" v-if="data.jokes">
-          <li v-for="joke in data.jokes">{{ joke.setup }}</li>
-        </ul>
-        <div v-else class="loading-content">
-          <Loader size="50px"></Loader>
-          <h2>Loading jokes...</h2>
-        </div>
-      </div>
+  <div class="content">
+    <ul class="joke-list" v-if="data.jokes">
+      <li v-for="joke in data.jokes">{{ joke.setup }}</li>
+    </ul>
+    <div v-else class="loading-content">
+      <Loader size="50px"></Loader>
+      <h2>Loading jokes...</h2>
     </div>
-  </main>
+  </div>
 </template>
 
 <script lang="ts">
