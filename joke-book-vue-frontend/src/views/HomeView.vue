@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { get_all_jokes } from '@/api/jokes'
-import Loader from '@/components/utils/Loader.vue'
+import LoaderWithMessage from '@/components/loader/LoaderWithMessage.vue'
 
 // const api_resp = await get_all_jokes()
 </script>
@@ -13,10 +13,11 @@ import Loader from '@/components/utils/Loader.vue'
     <ul class="joke-list" v-if="data.jokes">
       <li v-for="joke in data.jokes">{{ joke.setup }}</li>
     </ul>
-    <div v-else class="loading-content">
-      <Loader size="50px"></Loader>
+    <LoaderWithMessage v-else message="Loading jokes..." />
+    <!-- <div v-else class="loading-content">
+      <Loader size="3rem"></Loader>
       <h2>Loading jokes...</h2>
-    </div>
+    </div> -->
   </div>
 </template>
 

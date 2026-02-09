@@ -1,18 +1,20 @@
 <template>
-  <div class="container" :style="style">
-    <span class="loader"></span>
-    <span class="loader"></span>
-    <span class="loader"></span>
-    <span class="loader"></span>
-    <span class="loader"></span>
-    <span class="loader"></span>
+  <div :style="style">
+    <div class="container">
+      <span class="loader"></span>
+      <span class="loader"></span>
+      <span class="loader"></span>
+      <span class="loader"></span>
+      <span class="loader"></span>
+      <span class="loader"></span>
+    </div>
   </div>
 </template>
 
 <style scoped lang="scss">
 .container {
-  width: 100%;
-  // height: auto;
+  max-width: 100%;
+  max-height: 100%;
   aspect-ratio: 1;
   display: flex;
   flex-direction: row;
@@ -40,7 +42,7 @@
     border-radius: 10%;
   }
   50% {
-    height: 0;
+    height: 1px;
     background-color: rgb(160, 81, 120);
     border-radius: 0;
   }
