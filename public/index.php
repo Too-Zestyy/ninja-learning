@@ -150,6 +150,10 @@ $app->group('/api', function (RouteCollectorProxy $group) use ($app, $pdo) {
 
         $joke_details = $joke_details_query->fetch(PDO::FETCH_ASSOC);
 
+        if ($joke_details == false) {
+            return $response->withStatus(404);
+        }
+
         // TODO: Add error handling for non-existent jokes
 
         return $response->withJson($joke_details);
