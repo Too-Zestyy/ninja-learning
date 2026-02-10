@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { get_all_jokes } from '@/api/jokes'
+import { get_joke_page } from '@/api/jokes'
 import LoaderWithMessage from '@/components/loader/LoaderWithMessage.vue'
 
 // const api_resp = await get_all_jokes()
+// TODO: Add pagination
 </script>
 
 <template>
@@ -11,7 +12,9 @@ import LoaderWithMessage from '@/components/loader/LoaderWithMessage.vue'
 
   <div class="content">
     <ul class="joke-list" v-if="data.jokes">
-      <li v-for="joke in data.jokes">{{ joke.setup }}</li>
+      <li v-for="joke in data.jokes">
+        <RouterLink :to="{ name: 'joke', params: { id: joke.id } }">{{ joke.setup }}</RouterLink>
+      </li>
     </ul>
     <LoaderWithMessage v-else message="Loading jokes..." />
     <!-- <div v-else class="loading-content">
@@ -22,7 +25,7 @@ import LoaderWithMessage from '@/components/loader/LoaderWithMessage.vue'
 </template>
 
 <script lang="ts">
-type JokeResponse = { jokes: { setup: string; punchline: string }[]; pages: number }
+type JokeResponse = { jokes: { id: number; setup: string; punchline: string }[]; pages: number }
 export default {
   data() {
     return {
@@ -33,11 +36,10 @@ export default {
   },
 
   mounted() {
-    get_all_jokes().then(
+    get_joke_page().then(
       (resp) => (this.data = resp),
       (err) => (this.data = {} as JokeResponse),
     )
-    console.log(`the component is now mounted.`)
   },
 
   // },

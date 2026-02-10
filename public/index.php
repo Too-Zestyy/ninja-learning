@@ -139,6 +139,23 @@ $app->group('/api', function (RouteCollectorProxy $group) use ($app, $pdo) {
             ]
         );
     });
+
+    $group->get('/joke/{id:[0-9]+}', function (Request $request, Response $response, $args) use ($pdo) {
+        $joke_id = $args['id'];
+
+        // TODO: Move to dedicated service and share with twig front-end
+        $joke_details_query = $pdo->prepare("SELECT setup, punchline FROM jokes WHERE id = :id");
+        $joke_details_query->bindParam(':id', $joke_id);
+        $joke_details_query->execute();
+
+        $joke_details = $joke_details_query->fetch(PDO::FETCH_ASSOC);
+
+        // TODO: Add error handling for non-existent jokes
+
+        return $response->withJson($joke_details);
+
+
+    });
 })->add(new \middleware\ApiCorsHeaderMiddleware());
 
 $errorMiddleware = $app->addErrorMiddleware(false, true, true);
