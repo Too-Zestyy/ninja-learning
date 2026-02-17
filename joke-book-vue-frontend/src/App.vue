@@ -20,7 +20,7 @@ import { RouterLink, RouterView } from 'vue-router'
     </main>
   </div>
 </template>
-<style scoped>
+<style scoped lang="scss">
 .page-container {
   display: flex;
   flex-direction: column;
@@ -32,6 +32,19 @@ import { RouterLink, RouterView } from 'vue-router'
 header {
   line-height: 1.5;
   height: 10vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+header .wrapper {
+  width: 100%;
+  nav {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
 }
 
 .router {
@@ -78,7 +91,7 @@ nav a:first-of-type {
   header {
     display: flex;
     place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
+    // padding-right: calc(var(--section-gap) / 2);
   }
 
   .logo {
@@ -89,11 +102,12 @@ nav a:first-of-type {
     display: flex;
     place-items: flex-start;
     flex-wrap: wrap;
+    flex-direction: row;
   }
 
   nav {
     text-align: left;
-    margin-left: -1rem;
+    // margin-left: -1rem;
     font-size: 1rem;
 
     padding: 1rem 0;

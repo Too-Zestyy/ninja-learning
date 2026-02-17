@@ -21,6 +21,7 @@ import LoaderWithMessage from '@/components/loader/LoaderWithMessage.vue'
 <script lang="ts">
 import { get_joke_details } from '@/api/jokes'
 import router from '@/router'
+import { API_HOST } from '@/api/const'
 
 type JokeDetailsResponse = { setup: String; punchline: String }
 export default {
@@ -40,10 +41,11 @@ export default {
       // janky for now
       const joke_id = this.$route.params.id as unknown as number
 
-      get_joke_details(joke_id).then(
-        (resp) => (this.data = resp),
-        (err) => (this.data = {} as JokeDetailsResponse),
-      )
+      const resp = await fetch(API_HOST + `/api/joke/${joke_id}`)
+
+      if (resp.ok) {
+        this.data = (await resp.json()) as JokeDetailsResponse
+      }
     })()
   },
 

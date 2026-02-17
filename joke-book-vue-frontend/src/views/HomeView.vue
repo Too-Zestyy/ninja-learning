@@ -69,5 +69,9 @@ export default {
 }
 .joke-list {
   font-size: large;
+  display: contents;
+  li {
+    list-style-type: none;
+  }
 }
 </style>
