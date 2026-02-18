@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { get_joke_page } from '@/api/jokes'
-import LoaderWithMessage from '@/components/loader/LoaderWithMessage.vue'
+import LoaderWithMessage from '@/components/animations/LoaderWithMessage.vue'
 
 // const api_resp = await get_all_jokes()
 // TODO: Add pagination

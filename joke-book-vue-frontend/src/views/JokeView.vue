@@ -1,9 +1,14 @@
 <script setup lang="ts">
-import LoaderWithMessage from '@/components/loader/LoaderWithMessage.vue'
+import LoaderWithMessage from '@/components/animations/LoaderWithMessage.vue'
+import NotFoundBook from '@/components/animations/NotFoundBook.vue'
 </script>
 <template>
-  <!-- <p>{{ data }}</p> -->
-  <LoaderWithMessage message="Hold on tight..!" v-if="!data.punchline"></LoaderWithMessage>
+  <div v-if="api_status === 404" style="display: flex; flex-direction: column; align-items: center">
+    <NotFoundBook size="250px"></NotFoundBook>
+    <h3>Did someone really steal a <i>joke..?</i></h3>
+  </div>
+
+  <LoaderWithMessage message="Hold on tight..!" v-else-if="!data.punchline"></LoaderWithMessage>
   <div v-else class="joke-content">
     <h2>{{ data.setup }}</h2>
     <h3 v-if="!joke_revealed" v-on:click="joke_revealed = true">Reveal the punchline!</h3>
@@ -31,6 +36,7 @@ export default {
       joke_revealed: false,
       loading: false,
       error: null,
+      api_status: -1,
     }
   },
 
@@ -46,6 +52,8 @@ export default {
       if (resp.ok) {
         this.data = (await resp.json()) as JokeDetailsResponse
       }
+
+      this.api_status = resp.status
     })()
   },
 
