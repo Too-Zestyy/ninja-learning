@@ -4,7 +4,7 @@ import NotFoundBook from '@/components/animations/NotFoundBook.vue'
 </script>
 <template>
   <div v-if="api_status === 404" style="display: flex; flex-direction: column; align-items: center">
-    <NotFoundBook size="250px"></NotFoundBook>
+    <NotFoundBook size="250px" :book-message="'Joke #' + $route.params.id"></NotFoundBook>
     <h3>Did someone really steal a <i>joke..?</i></h3>
   </div>
 

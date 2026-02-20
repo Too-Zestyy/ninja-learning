@@ -5,7 +5,7 @@
         <div class="lines"></div>
       </div>
       <div class="ripped-page">
-        <p>Page {{ $route.params.id }} not found</p>
+        <p>{{ bookMessage }}</p>
       </div>
     </div>
   </div>
@@ -50,6 +50,18 @@
   );
 }
 .ripped-page {
+  p {
+    color: black;
+    font-size: 1.2rem;
+    text-align: center;
+    margin: 0.25rem;
+    margin-bottom: 0;
+    line-height: 2.1rem;
+
+    font-style: italic;
+    // font-weight: 500;
+  }
+
   position: relative;
   width: 50%;
   height: 75%;
@@ -81,15 +93,6 @@
     ) -1rem
     25%/100% 0.5rem;
 }
-.ripped-page p {
-  color: black;
-  font-size: 1.2rem;
-  text-align: center;
-  margin: 0.5rem;
-  margin-bottom: 0;
-
-  font-style: italic;
-}
 
 @keyframes book-bob {
   0% {
@@ -118,7 +121,10 @@
 
 <script lang="ts">
 export default {
-  props: ['size'],
+  props: {
+    size: String,
+    bookMessage: String,
+  },
   computed: {
     style() {
       return { width: this.$props.size }

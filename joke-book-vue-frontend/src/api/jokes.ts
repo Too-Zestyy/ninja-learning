@@ -12,13 +12,7 @@ const get_joke_page = async (page: number = 1) => {
 }
 
 const get_joke_details = async (id: number) => {
-  const response = await fetch(API_HOST + `/api/joke/${id}`)
-
-  if (response.ok) {
-    return response.json()
-  } else {
-    return 'failed to get from API.'
-  }
+  return await fetch(API_HOST + `/api/joke/${id}`)
 }
 
 export { get_joke_page, get_joke_details }
