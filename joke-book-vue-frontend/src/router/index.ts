@@ -23,6 +23,10 @@ const router = createRouter({
 
       component: () => import('../views/JokeView.vue'),
     },
+    {
+      path: '/:pathMatch(.*)*',
+      component: () => import('../views/GenericNotFound.vue'),
+    },
   ],
 })
 

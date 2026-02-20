@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import LoaderWithMessage from '@/components/animations/LoaderWithMessage.vue'
-import NotFoundBook from '@/components/animations/NotFoundBook.vue'
+// import NotFoundBook from '@/components/animations/NotFoundBook.vue'
+import PageNotFound from '@/components/PageNotFound.vue'
 </script>
 <template>
-  <div v-if="api_status === 404" style="display: flex; flex-direction: column; align-items: center">
-    <NotFoundBook size="250px" :book-message="'Joke #' + $route.params.id"></NotFoundBook>
-    <h3>Did someone really steal a <i>joke..?</i></h3>
-  </div>
-
+  <PageNotFound
+    v-if="api_status === 404"
+    :book-message="'Joke #' + $route.params.id"
+    subtitle="Are they really tring to steal a joke..?"
+  />
   <LoaderWithMessage message="Hold on tight..!" v-else-if="!data.punchline"></LoaderWithMessage>
   <div v-else class="joke-content">
     <h2>{{ data.setup }}</h2>
